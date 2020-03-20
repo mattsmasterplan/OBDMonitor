@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             Bundle b = msg.getData();
             RPM = b.getString("RPM");
-           // rpmView.setText(RPM);
+            // rpmView.setText(RPM);
         }
     };
 
@@ -63,9 +63,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             Bundle b = msg.getData();
             SPEED = b.getString("Speed");
-          //  speedView.setText(SPEED);
+            speedView.setText(SPEED);
         }
     };
+    private Button DisplaySpeedButton;
+    private TextView speedView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,15 +75,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.connect_view);
 
 
-
-
     }
 
     protected void baseViewChange() {
 
-        setContentView(R.layout.fragment_view_base);
+        setContentView(R.layout.activity_main);
 
+        speedView = (TextView) findViewById(R.id.speedView);
 
+        DisplaySpeedButton = (Button) findViewById(R.id.DisplaySpeedButton);
+        DisplaySpeedButton.setTag(1);
+        DisplaySpeedButton.setOnClickListener(this);
 
 
     }
@@ -108,31 +112,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.connectButton:
                 checkBT();
 
-               // connectionView = (TextView) findViewById(R.id.connectionView);
-               // connectionView.setText(R.string.noConnection);
+                // connectionView = (TextView) findViewById(R.id.connectionView);
+                // connectionView.setText(R.string.noConnection);
 
-              //  rpmView = (TextView) findViewById(R.id.rpmView);
-              //  speedView = (TextView) findViewById(R.id.speedView);
-              //  vinView = (TextView) findViewById(R.id.vinView);
-              //  codeView = (TextView) findViewById(R.id.codeView);
+                //  rpmView = (TextView) findViewById(R.id.rpmView);
+                //  speedView = (TextView) findViewById(R.id.speedView);
+                //  vinView = (TextView) findViewById(R.id.vinView);
+                //  codeView = (TextView) findViewById(R.id.codeView);
 
 
-              //  connectButton = (Button) findViewById(R.id.connectButton);
-               // connectButton.setOnClickListener(this);
+                //  connectButton = (Button) findViewById(R.id.connectButton);
+                // connectButton.setOnClickListener(this);
 
-               // DisplayRPMButton = (Button) findViewById(R.id.DisplayRPMButton);
-               // DisplayRPMButton.setTag(1);
-               // DisplayRPMButton.setOnClickListener(this);
+                // DisplayRPMButton = (Button) findViewById(R.id.DisplayRPMButton);
+                // DisplayRPMButton.setTag(1);
+                // DisplayRPMButton.setOnClickListener(this);
 
-               // DisplaySpeedButton = (Button) findViewById(R.id.DisplaySpeedButton);
-               // DisplaySpeedButton.setTag(1);
-               // DisplaySpeedButton.setOnClickListener(this);
+                //DisplaySpeedButton = (Button) findViewById(R.id.DisplaySpeedButton);
+                //DisplaySpeedButton.setTag(1);
+                //DisplaySpeedButton.setOnClickListener(this);
 
-               // DetectVINButton = (Button) findViewById(R.id.DetectVINButton);
-               // DetectVINButton.setOnClickListener(this);
+                // DetectVINButton = (Button) findViewById(R.id.DetectVINButton);
+                // DetectVINButton.setOnClickListener(this);
 
-              // CheckDTCButton = (Button) findViewById(R.id.CheckDTCButton);
-               // CheckDTCButton.setOnClickListener(this);
+                // CheckDTCButton = (Button) findViewById(R.id.CheckDTCButton);
+                // CheckDTCButton.setOnClickListener(this);
                 break;
 
            /* case R.id.RPMFragToggle:
@@ -165,14 +169,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 int speedstatus = (Integer) v.getTag();
                 if (speedstatus == 1) {
-                  //  DisplaySpeedButton.setText(R.string.pause_speed);
-                   // DisplaySpeedButton.setTag(0);
+                    DisplaySpeedButton.setText(R.string.pause_speed);
+                    DisplaySpeedButton.setTag(0);
                     continueSpeed = true;
                     displaySpeed();
                     break;
                 } else if (speedstatus == 0) {
-                 //   DisplaySpeedButton.setText(R.string.resume_speed);
-                 //   DisplaySpeedButton.setTag(1);
+                    DisplaySpeedButton.setText(R.string.resume_speed);
+                    DisplaySpeedButton.setTag(1);
                     continueSpeed = false;
                     break;
                 }
@@ -267,7 +271,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //connectionView = (TextView) findViewById(R.id.connectionView);
             bluetoothConnected = true;
             Toast.makeText(MainActivity.this, "ODB-II BlueTooth Connection Established", Toast.LENGTH_LONG).show();
-           // connectionView.setText(R.string.connected);
+            // connectionView.setText(R.string.connected);
         } catch (IOException e) {
             Toast.makeText(MainActivity.this, "Failed to connect BlueTooth device", Toast.LENGTH_LONG).show();
             e.printStackTrace();
@@ -287,7 +291,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             baseViewChange();
 
 
-
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -305,7 +308,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             VIN = VinCommand.getFormattedResult();
             Log.d("gping2", "VIN: " + VIN);
 
-           // vinView.setText(VIN);
+            // vinView.setText(VIN);
 
             //NullPointerException = no BlueTooth connection
         } catch (IOException | InterruptedException | NoDataException | NullPointerException e) {
@@ -407,12 +410,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             if (result.length() > 1) {
 
-               // codeView.setText(result);
+                // codeView.setText(result);
 
                 //If codes are found, display button to clear codes
-               // ClearDTCButton = (Button) findViewById(R.id.ClearDTCButton);
-               // ClearDTCButton.setOnClickListener(this);
-               // ClearDTCButton.setVisibility(View.VISIBLE);
+                // ClearDTCButton = (Button) findViewById(R.id.ClearDTCButton);
+                // ClearDTCButton.setOnClickListener(this);
+                // ClearDTCButton.setVisibility(View.VISIBLE);
 
 
             } else {
@@ -424,7 +427,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void run() {
                         runOnUiThread(new Runnable() {
                             public void run() {
-                               // codeView.setText("");
+                                // codeView.setText("");
                             }
                         });
                     }
@@ -452,8 +455,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (result.equals("44")) {
 
-          //  codeView.setText("");
-           // ClearDTCButton.setVisibility(View.INVISIBLE);
+            //  codeView.setText("");
+            // ClearDTCButton.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -484,8 +487,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 //maintain bluetooth when changing activities
-
-
 
 
 //IDEAS
